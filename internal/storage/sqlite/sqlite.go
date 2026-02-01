@@ -48,7 +48,7 @@ func (s *Storage) SaveURL(urlToSave string, alias string) (int64, error) {
 		return 0, fmt.Errorf("%s: %w", op, err)
 	}
 
-	res, err := stmt.Exec(urlToSave, alias)
+	res, err := stmt.Exec(alias, urlToSave)
 	if err != nil {
 		return 0, fmt.Errorf("%s: %w", op, err)
 	}

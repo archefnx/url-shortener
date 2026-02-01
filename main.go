@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
+	"shortener/internal/http-server/handlers/redirect"
 	"shortener/internal/http-server/handlers/url/save"
 	"shortener/internal/lib/logger/handlers/slogpretty"
 
@@ -45,6 +45,7 @@ func main() {
 	router.Use(middleware.URLFormat)
 
 	router.Post("/url", save.New(log, storage))
+	router.Get("/{alias}", redirect.New(log, storage))
 
 	log.Info("starting server", slog.String("address", cfg.Address))
 
