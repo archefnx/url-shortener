@@ -95,6 +95,10 @@ func (s *Storage) DeleteURL(alias string) (int64, error) {
 		return 0, fmt.Errorf("%s: %w", op, err)
 	}
 
+	if errors.Is(err, sql.ErrNoRows) {
+		return 0, storage.ErrURLNotFound
+	}
+
 	n, err := res.RowsAffected()
 	if err != nil {
 		return 0, fmt.Errorf("%s: %w", op, err)
